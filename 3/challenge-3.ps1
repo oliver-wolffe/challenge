@@ -1,15 +1,13 @@
-function Get-ObjectKey
+function Get-ObjectKeyValue
 {
 
     param (
-        [string] $objectJson,
+        [PSCustomObject] $object,
         [string] $key
     )
 
-    $object = $objectJson | ConvertFrom-Json
-
-    $location = $key -replace "/", "."
-    $expression = "{0}.{1}" -f '$object', $location
+    $path = $key -replace "/", "."
+    $expression = "{0}.{1}" -f '$object', $path
     
     $value = invoke-expression $expression
 
@@ -27,30 +25,30 @@ function Get-ObjectKey
 #$object = '{"a":{"b":{"c":"d"}}}'
 #key = 'a/b/c'
 
-$object = '{
-    "player1": {
-        "name": "Gordon Banks",
-        "attributes": {
-            "position": "GKP",
-            "appearances": "73"
+$object = [PSCustomObject]@{
+    player1 = @{
+        name = "Gordon Banks"
+        attributes = @{
+            position = "GKP"
+            appearances = "73"
         }
     }
-}'
+}
 
 $key = "player1/name"
-Get-ObjectKey -objectJson $object -Key $key
+Get-ObjectKey -object $object -key $key
 #returns "Gordon Banks"
 
 $key = "player1/attributes/position"
-Get-ObjectKey -objectJson $object -Key $key
+Get-ObjectKey -object $object -key $key
 #returns "GKP"
 
 $key = "player1/attributes/appearances"
-Get-ObjectKey -objectJson $object -Key $key
+Get-ObjectKey -object $object -key $key
 #returns "73"
 
 $key = "player2/attributes/appearances"
-Get-ObjectKey -objectJson $object -Key $key
+Get-ObjectKey -object $object -key $key
 #returns "value not found for this key"
 
 
