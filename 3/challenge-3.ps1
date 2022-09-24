@@ -36,19 +36,19 @@ $object = [PSCustomObject]@{
 }
 
 $key = "player1/name"
-Get-ObjectKey -object $object -key $key
+Get-ObjectKeyValue -object $object -key $key
 #returns "Gordon Banks"
 
 $key = "player1/attributes/position"
-Get-ObjectKey -object $object -key $key
+Get-ObjectKeyValue -object $object -key $key
 #returns "GKP"
 
 $key = "player1/attributes/appearances"
-Get-ObjectKey -object $object -key $key
+Get-ObjectKeyValue -object $object -key $key
 #returns "73"
 
 $key = "player2/attributes/appearances"
-Get-ObjectKey -object $object -key $key
+Get-ObjectKeyValue -object $object -key $key
 #returns "value not found for this key"
 
 
